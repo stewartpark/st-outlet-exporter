@@ -21,9 +21,9 @@ busybox httpd -p 80 -h /www
 while true; do
     export WATT=$(node cli.js status "$SMARTTHINGS_OUTLET_NAME" | grep value | head -n 1 | awk '{ print $2 }')
     touch /tmp/metrics
-    echo "HELP smartthings_outlet_watt Power consumption measured at the smart outlet in Watts" >> /tmp/metrics
-    echo "TYPE smartthings_outlet_watt gauge" >> /tmp/metrics
-    echo "smartthings_outlet_watt{name=$SMARTTHINGS_OUTLET_NAME} $WATT" >> /tmp/metrics
+    echo "# HELP smartthings_outlet_watt Power consumption measured at the smart outlet in Watts" >> /tmp/metrics
+    echo "# TYPE smartthings_outlet_watt gauge" >> /tmp/metrics
+    echo "smartthings_outlet_watt{name=\"$SMARTTHINGS_OUTLET_NAME\"} $WATT" >> /tmp/metrics
     mv /tmp/metrics /www/metrics
     sleep 60
 done
